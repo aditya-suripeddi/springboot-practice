@@ -1,0 +1,51 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Kafka",
+		"_postman_id": "c1935217-6a71-59c8-6da1-90f68c812d75",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8081/publish",
+			"request": {
+				"url": "http://localhost:8081/publish",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"bookName\" : \"Atomic Habits\",\n\t\"isbn\" : \"2\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8081/publish/txt",
+			"request": {
+				"url": "http://localhost:8081/publish/txt",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"txt\" : \"You have a new message\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true # add circuit breaker details to actuator health indicator
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+
+# Reference: https://resilience4j.readme.io/docs/circuitbreaker#create-and-configure-a-circuitbreaker
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceA:
+        # show circuit breaker status for this instance
+        registerHealthIndicator: true
+
+        eventConsumerBufferSize: 10
+
+        #  failure rate threshold in percentage above which the CircuitBreaker should trip open and start short-circuiting calls
+        failureRateThreshold: 50
+
+        # minimum number of calls which are required (per sliding window period) before the CircuitBreaker can calculate the error rate or slow call rate
+        # For example, if minimumNumberOfCalls is 10, then at least 10 calls must be recorded, before the failure rate can be calculated
+        # If only 9 calls have been recorded the CircuitBreaker will not transition to open even if all 9 calls have failed
+        minimumNumberOfCalls: 5
+
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+        # time that the CircuitBreaker should wait before transitioning from open to half-open
+        waitDurationInOpenState: 5s
+
+        # number of permitted calls when the CircuitBreaker is half open
+        # only after 3 calls are made use failureThresholdRate to move to CLOSED / OPEN state
+        permittedNumberOfCallsInHalfOpenState: 3
+
+        #  size of the sliding window which is used to record the outcome of calls when the CircuitBreaker is closed
+        slidingWindowSize: 10
+
+        # if the sliding window is COUNT_BASED, the last slidingWindowSize calls are recorded and aggregated.
+        # if the sliding window is TIME_BASED, the calls of the last slidingWindowSize seconds recorded and aggregated.
+        slidingWindowType: COUNT_BASED
+
+
+  retry:
+    instances:
+      serviceA:
+        registerHealthIndicator: true
+        maxRetryAttempts: 4
+        waitDuration: 3s
+
+
+  ratelimiter:
+    instances:
+      serviceA:
+        registerHealthIndicator: false
+        limitForPeriod: 10
+        limitRefreshPeriod: 10s
+        timeOutDuration: 3s

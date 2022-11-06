@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gorilla
+spec:
+  selector:
+    matchLabels:
+      app: gorilla
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gorilla
+    spec:
+      containers:
+        - name: gorilla
+          image: gorilla:latest
+          imagePullPolicy: Never
+          envFrom:
+            - configMapRef:
+                name: gorilla-config
+          ports:
+            - containerPort: 8080

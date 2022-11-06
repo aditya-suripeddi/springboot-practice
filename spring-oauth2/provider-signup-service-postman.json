@@ -1,0 +1,170 @@
+{
+	"variables": [],
+	"info": {
+		"name": "spring-security",
+		"_postman_id": "9c5f6032-f0dc-0ac3-adeb-67410a9818da",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"url": "http://provider-signup-service:9090/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\" : \"kevin\",\n  \"lastName\" : \"mike\",\n  \"password\" : \"oldPasswrd\",\n  \"email\" : \"kevin@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "verify registration",
+			"request": {
+				"url": {
+					"raw": "http://provider-signup-service:9090/verifyRegistration?token=1323fb6d-49ac-4a4b-babc-d9a11f88e1ee",
+					"protocol": "http",
+					"host": [
+						"provider-signup-service"
+					],
+					"port": "9090",
+					"path": [
+						"verifyRegistration"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "1323fb6d-49ac-4a4b-babc-d9a11f88e1ee",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "resend verification token",
+			"request": {
+				"url": {
+					"raw": "http://provider-signup-service:9090/resendVerifyToken?token=7156418e-320e-4fac-8a70-ce08b5f67678",
+					"protocol": "http",
+					"host": [
+						"provider-signup-service"
+					],
+					"port": "9090",
+					"path": [
+						"resendVerifyToken"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "7156418e-320e-4fac-8a70-ce08b5f67678",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "reset password",
+			"request": {
+				"url": "provider-signup-service:9090/resetPassword",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"kevin@gmail.com\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "save password",
+			"request": {
+				"url": {
+					"raw": "http://provider-signup-service:9090/savePassword?token=cd30be57-0536-4667-9d7f-5e4d550db35a",
+					"protocol": "http",
+					"host": [
+						"provider-signup-service"
+					],
+					"port": "9090",
+					"path": [
+						"savePassword"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "cd30be57-0536-4667-9d7f-5e4d550db35a",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"newPassword\" : \"newPassword\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "changePassword",
+			"request": {
+				"url": "http://provider-signup-service:9090/changePassword",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"email\" : \"kevin@gmail.com\",\n     \"oldPassword\" : \"oldPassword\",\n     \"newPassword\" : \"newPassword\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

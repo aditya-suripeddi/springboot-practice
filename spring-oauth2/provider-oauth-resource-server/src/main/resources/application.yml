@@ -1,0 +1,17 @@
+server:
+  port:
+    8090
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # speak with authorization server using jwt semantics
+          issuer-uri: http://provider-oauth-auth-server:9000

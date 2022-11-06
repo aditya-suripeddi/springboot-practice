@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gorilla-config
+  namespace: default
+data:
+  some.other.service: "http://some-other-service:8080"
+  API_GATEWAY_SERVICE: "http://api-gateway-service:8080"
