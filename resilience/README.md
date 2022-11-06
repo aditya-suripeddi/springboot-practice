@@ -5,7 +5,7 @@ This code is taken from  [Resilience4j Tutorial, Daily Code Buffer](https://www.
 the goal is to understand the fault-tolerance modules provided by resilience4j library hands-on:
    - circuit breaker
    - retry 
-   - rate limiter
+   - rate limiter [ to do ]
 
 
 ### What is circuit breaker ?
