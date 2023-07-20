@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bookmarker-config
+data:
+  postgres_host: postgres-svc
+  postgres_port: "5432"
+  postgres_dbname: appdb
+---
+# YAML DSL supports multiple documents in one file with separation of 3 hyphens (used above)
+# https://www.educative.io/courses/introduction-to-yaml/N881Nq9pVY8#Multi-Document-support-in-YAML
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bookmarker-secrets
+type: Opaque
+data:
+  # https://www.base64encode.org/
+  postgres_username: cG9zdGdyZXM=
+  postgres_password: cG9zdGdyZXM=

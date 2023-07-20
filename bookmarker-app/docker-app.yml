@@ -1,0 +1,46 @@
+# in intellij you can hover the pointer on keywords and see
+# their documentation / functionality
+
+version: '3.8'
+services:
+# the application code we develop
+  bookmarker-api:
+    image: bookmarker-api
+    container_name: bookmarker-api
+    build:
+      context: bookmarker-api # either path to a directory containing Dockerfile or url to git repo
+
+      dockerfile: Dockerfile.layered # notice you did not mention the path ./bookmarker-api/Dockerfile.layered
+                                     # the context setting takes care of this
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+
+      # note: the port used in datasource url below
+      #       is the postgres server port inside the container
+
+      # when docker compose runs the bookmarker-db and bookmarker-api
+      # container, they are in the same network and one container
+      # can talk to other, so in datasource url we add the bookmarker-db
+      # as host
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bookmarker-db:5432/appdb
+
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "18080:8080"
+    restart: always
+    depends_on:
+      - bookmarker-db
+
+  bookmarker-ui:
+    image: bookmarker-ui-nextjs
+    container_name: bookmarker-ui-nextjs
+    build:
+      context: bookmarker-ui-nextjs
+      dockerfile: Dockerfile
+    ports:
+     - "13000:3000"
+    environment:
+      SERVER_SIDE_API_BASE_URL: http://bookmarker-api:8080
+      CLIENT_SIDE_API_BASE_URL: http://localhost:18080

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: bookmark-api   # deployment name
+  labels:
+    app: bookmark-api  #  label tagged to deployment
+
+
+# hey k8s look for pods that match
+# "app=bookmark-api" selection (query pods that have label "app" with value "bookmark")
+# and maintain ${replicas} instances of such pods
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: bookmark-api
+
+  template: # pod definition (has same structure as pod.yml)
+    metadata:
+      labels:
+        app: bookmark-api
+    spec:
+      containers:
+      - image: aditya0491/bookmarker-api   # container image
+
+    # - image: aditya0491/bookmarker-api:1.2    # if you update the image version then in the deployment
+                                                # rollout history you will see a new row with
+                                                # REVISION and CHANGE-CAUSE
+
+        name: bookmarker-api              # pod name

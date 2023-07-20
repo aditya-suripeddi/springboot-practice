@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bookmark-api
+  labels:
+    app: bookmark-api
+    version: "1.0"
+spec:
+  containers:
+  - image: aditya0491/bookmarker-api
+    name: bookmark-api
+    ports:
+    - containerPort: 8080

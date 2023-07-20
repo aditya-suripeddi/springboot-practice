@@ -1,0 +1,27 @@
+
+# Refer this blog https://www.baeldung.com/docker-layers-spring-boot
+# to understand the layers spring-boot support from less-likely to change at bottom
+# to more likely to change as you go up, to minimize docker cache busting for faster
+# build times (time to create your spring boot application container when application
+# src code changes )
+
+
+#### the first stage of our build will extract the layers
+FROM eclipse-temurin:17-jre-focal as builder
+
+  # The WORKDIR instruction sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions
+  # that follow it in the Dockerfile.  ( seems similar to running $ cd /path/to/workdir in the container)
+WORKDIR application
+
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} application.jar
+RUN java -Djarmode=layertools -jar application.jar extract
+
+#### the second stage of our build will copy the extracted layers
+FROM eclipse-temurin:17-jre-focal
+WORKDIR application
+COPY --from=builder application/dependencies/ ./
+COPY --from=builder application/spring-boot-loader/ ./
+COPY --from=builder application/snapshot-dependencies/ ./
+COPY --from=builder application/application/ ./
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
